@@ -19,6 +19,6 @@ const responseSlice = createSlice({
   },
 });
 
-export const responseActions = responseSlice.actions;
+export const getResponses = (id) => (state) => state.responses[id];
 
 export default responseSlice;

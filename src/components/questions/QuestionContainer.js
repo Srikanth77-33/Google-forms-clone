@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Footer, InputTypeSelect, Input } from "../question";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store/formSlice";
-import { infoActions } from "../../store/infoSlice";
+import { Footer, InputTypeSelect, Input } from ".";
+import {
+  setTop,
+  useDispatch,
+  useSelector,
+  updateQuestion,
+  getEditQuestionIndex,
+  getTheme,
+} from "../../store";
 
-const QuestionLayout = ({
+const QuestionContainer = ({
   input,
   inputIndex,
   formId,
@@ -13,10 +18,8 @@ const QuestionLayout = ({
   handleClick,
   focus,
 }) => {
-  const editQuestionIndex = useSelector(
-    (state) => state.info.editQuestionIndex
-  );
-  const theme = useSelector((state) => state.forms.find((item) => item.id === formId).theme)
+  const editQuestionIndex = useSelector(getEditQuestionIndex());
+  const theme = useSelector(getTheme(formId));
   const componentRef = useRef();
   const questionRef = useRef();
   const dispatch = useDispatch();
@@ -31,14 +34,12 @@ const QuestionLayout = ({
 
   useEffect(() => {
     if (componentRef.current && editQuestionIndex === inputIndex) {
-      dispatch(
-        infoActions.setTop({ top: Math.floor(componentRef.current.offsetTop) })
-      );
+      dispatch(setTop({ top: Math.floor(componentRef.current.offsetTop) }));
     }
   }, [editQuestionIndex, dispatch, inputIndex]);
 
-  const updateQuestion = (question) => {
-    dispatch(actions.updateQuestion({ formId, inputIndex, question }));
+  const handleUpdateQuestion = (question) => {
+    dispatch(updateQuestion({ formId, inputIndex, question }));
   };
 
   const handleOnClick = (e, focus) => {
@@ -46,15 +47,15 @@ const QuestionLayout = ({
   };
 
   const handleFocus = () => {
-    if( questionRef && questionRef.current) {
+    if (questionRef && questionRef.current) {
       questionRef.current.style.borderBottom = `2px solid ${theme}`;
     }
-  }
+  };
   const handleBlur = () => {
-    if( questionRef && questionRef.current) {
+    if (questionRef && questionRef.current) {
       questionRef.current.style.borderBottom = `1px solid #9e9e9e`;
     }
-  }
+  };
 
   if (editQuestionIndex === inputIndex) {
     return (
@@ -68,7 +69,7 @@ const QuestionLayout = ({
             placeholder="Question"
             onFocus={() => handleFocus()}
             onBlur={() => handleBlur()}
-            onChange={(e) => updateQuestion(e.target.value)}
+            onChange={(e) => handleUpdateQuestion(e.target.value)}
           />
           <InputTypeSelect inputIndex={inputIndex} inputType={input.type} />
         </div>
@@ -132,4 +133,4 @@ const Div = styled.div`
   }
 `;
 
-export default QuestionLayout;
+export default QuestionContainer;

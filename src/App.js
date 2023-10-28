@@ -4,12 +4,10 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import { Home, Questions } from "./components";
 import store from "./store";
 import { Provider } from "react-redux";
-import HeaderLayout from "./components/layouts/HeaderLayout";
-import View from "./components/form/View";
-import Responses from "./components/form/Responses";
+import { Home, Questions, View, Responses } from './pages';
+import { HeaderLayout } from "./layouts";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,12 +21,6 @@ const router = createBrowserRouter(
     </Route>
   )
 );
-
-// <Route>
-// <Route index element={<Home />} />
-// <Route path=":id" element={<Form />} />
-// <Route path="/dummy" element={<Dummy />} />
-// </Route>
 
 function App() {
   return (

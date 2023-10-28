@@ -33,6 +33,10 @@ const formSlice = createSlice({
       state[state.findIndex(({ id }) => id === formId)].description =
         description;
     },
+    changeTheme( state, { payload }) {
+      const { formId, theme } = payload;
+      state[state.findIndex(({ id }) => id === formId)].theme = theme;
+    },
 
     createInput(state, { payload }) {
       const { formId, editQuestionIndex } = payload;
@@ -90,13 +94,12 @@ const formSlice = createSlice({
         inputIndex
       ].options[optionIndex] = option;
     },
-    changeTheme( state, { payload }) {
-      const { formId, theme } = payload;
-      state[state.findIndex(({ id }) => id === formId)].theme = theme;
-    }
   },
 });
 
-export const actions = formSlice.actions;
+
+export const getTheme =  (formId) => (state) => state.forms.find((item) => item.id === formId).theme;
+export const getForms = () => (state) => state.forms;
+export const getFormData = (formId) => (state) => state.forms.find((item) => item.id === formId)
 
 export default formSlice;

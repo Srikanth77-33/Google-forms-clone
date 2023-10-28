@@ -1,15 +1,16 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Question from "./Question";
-import { useSelector } from "react-redux";
+import Question from "../view/Question";
+import { useSelector, getTheme } from "../../store";
 
-const ShortAnswer = ({ input, inputIndex, formId, response }) => {
-  const theme = useSelector((state) => state.forms.find((item) => item.id === formId).theme)
+const Date = ({ input, inputIndex, formId, response }) => {
+  const theme = useSelector(getTheme(formId))
   const [isFocused, setIsFocused] = useState('false')
 
   const style = {
     ...(isFocused && { outline: 'none', borderBottom: `1px solid ${theme}` }),
   }
+
   return (
     <Question
       question={input ? input.question : response.question}
@@ -19,16 +20,16 @@ const ShortAnswer = ({ input, inputIndex, formId, response }) => {
       <Div>
         {input ? (
           <input
-            type="text"
+            type="Date"
             name={inputIndex}
-            placeholder="Your answer"
             style={style}
+            placeholder="Your answer"
+            required={input.required}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            required={input.required}
           />
         ) : (
-          <input type="text" value={response.ans} readOnly />
+          <input type="Date" value={response.ans} disabled  />
         )}
       </Div>
     </Question>
@@ -40,10 +41,9 @@ const Div = styled.div`
   margin-bottom: 24px;
   input {
     padding: 8px;
-    width: 50%;
     border: none;
     border-bottom: 1px solid #9e9e9e;
   }
 `;
 
-export default ShortAnswer;
+export default Date;

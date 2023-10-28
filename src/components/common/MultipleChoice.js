@@ -1,26 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Question from "./Question";
+import Question from "../view/Question";
 
-const CheckBoxes = ({ input, inputIndex, formId, response }) => {
-  const [checked, setChecked] = useState(input?.options.map(() => false));
+const MultipleChoice = ({ input, inputIndex, response }) => {
+  const [checked, setChecked] = useState(-1);
   const [required, setRequired] = useState(input?.required);
 
-  const handleOnChange = (e, ind) => {
-    setChecked((state) => {
-      let newArr = [...state];
-      newArr[ind] = e.target.checked;
-
-      if (input.required) {
-        if (newArr.find((item) => item === true)) {
-          setRequired(false);
-        } else {
-          setRequired(true);
-        }
-      }
-
-      return newArr;
-    });
+  const handleOnChange = (ind) => {
+    setChecked(ind);
+    if (required === true) {
+      setRequired(false);
+    }
   };
 
   return (
@@ -33,13 +23,13 @@ const CheckBoxes = ({ input, inputIndex, formId, response }) => {
         {(input ? input.options : response.ans).map((option, ind) => (
           <label key={ind}>
             <input
-              type="checkbox"
+              type="radio"
               value={option}
               name={`${inputIndex}${ind}`}
-              readOnly={input ? false : true}
-              checked={input ? checked[ind] : option.value}
+              disabled={input ? false : true}
+              checked={input ? checked === ind : option.value}
               required={required}
-              onChange={(e) => handleOnChange(e, ind)}
+              onChange={() => handleOnChange(ind)}
             />
             <span>{input ? option : option.option}</span>
           </label>
@@ -51,7 +41,7 @@ const CheckBoxes = ({ input, inputIndex, formId, response }) => {
 
 const Div = styled.div`
   margin-left: 32px;
-  margin-bottom: 24px;
+  padding-bottom: 24px;
   input {
     width: 20px;
     height: 20px;
@@ -67,4 +57,4 @@ const Div = styled.div`
   }
 `;
 
-export default CheckBoxes;
+export default MultipleChoice;

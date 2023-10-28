@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Question from "./Question";
-import { useSelector } from "react-redux";
+import Question from "../view/Question";
+import { getTheme, useSelector } from '../../store';
 
 const LongAnswer = ({ input, inputIndex, formId, response }) => {
   const [rows, setRows] = useState(1);
-  const theme = useSelector((state) => state.forms.find((item) => item.id === formId).theme)
-  const [isFocused, setIsFocused] = useState('false')
+  const theme = useSelector(getTheme(formId));
+  const [isFocused, setIsFocused] = useState('false');
 
   const style = {
     ...(isFocused && { outline: 'none', borderBottom: `1px solid ${theme}` }),
@@ -39,7 +39,7 @@ const LongAnswer = ({ input, inputIndex, formId, response }) => {
         ) : (
           <textarea
             value={response.ans}
-            readOnly
+            disabled 
             rows={Math.ceil(response.ans.length / 70)}
           />
         )}

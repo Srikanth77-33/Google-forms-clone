@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Question from "./Question";
+import Question from "../view/Question";
 
-const Dropdown = ({ input, inputIndex, formId, response }) => {
+const Dropdown = ({ input, inputIndex, response }) => {
   return (
     <Question
       question={input ? input.question : response.question}

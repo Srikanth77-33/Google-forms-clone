@@ -5,8 +5,7 @@ const infoSlice = createSlice({
   initialState: {
     sideBtn: { top: 258 },
     editQuestionIndex: 0,
-    isSubmitted: false,
-    theme: '#673ab7'
+    isSubmitted: false
   },
   reducers: {
     setEditQuestionIndex(state, { payload }) {
@@ -18,13 +17,12 @@ const infoSlice = createSlice({
     },
     setIsSubmitted(state, { payload }) {
       state.isSubmitted = payload.isSubmitted;
-    },
-    setTheme( state, { payload }) {
-      state.theme = payload.theme;
     }
   },
 });
 
-export const infoActions = infoSlice.actions;
+export const getEditQuestionIndex = () => (state) => state.info.editQuestionIndex;
+export const getTop = () => (state) => state.info.sideBtn.top;
+export const getIsSubmitted = () => (state) => state.info.isSubmitted;
 
 export default infoSlice;

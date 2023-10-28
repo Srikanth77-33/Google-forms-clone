@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "../../images/forms.png";
+import logo from "../images/forms.png";
 import { NavLink, Outlet } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { MdOutlineColorLens } from "react-icons/md";
-import { actions } from "../../store/formSlice";
+import { MdOutlineColorLens } from "../icons";
+import {
+  changeTheme,
+  getFormData,
+  getTheme,
+  useDispatch,
+  useSelector,
+  getResponses,
+} from "../store";
 
 const HeaderLayout = () => {
   let id = useParams().id;
   const dispatch = useDispatch();
-   
-  const theme = useSelector((state) => state.forms.find((item) => item.id === id).theme)
 
-  const formData = useSelector((state) =>
-    state.forms.find((item) => item.id === id)
-  );
+  const theme = useSelector(getTheme(id));
+  const formData = useSelector(getFormData(id));
+  const responses = useSelector(getResponses(id));
 
-  const responses = useSelector((state) => state.responses[id]);
   let [background, setBackground] = useState("black");
 
   const style = ({ isActive }) => {
@@ -31,11 +34,11 @@ const HeaderLayout = () => {
   };
 
   const onChangeTheme = (e) => {
-    dispatch(actions.changeTheme({ formId: id, theme: e.target.value}))
+    dispatch(changeTheme({ formId: id, theme: e.target.value }));
   };
 
   return (
-    <div  >
+    <div key={id}>
       <div style={{ position: "fixed", top: "0px", width: "100vw", zIndex: 1 }}>
         <Head>
           <div style={{ display: "flex" }}>

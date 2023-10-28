@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../images/forms.png";
 import styled from "styled-components";
 
-export const Header = () => {
+const Header = () => {
   return (
     <Head>
       <img src={logo} className="logo" alt="forms_logo" />
@@ -24,3 +24,5 @@ const Head = styled.div`
     font-weight: 600;
   }
 `;
+
+export default Header;

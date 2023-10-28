@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import blankFromImg from "../../images/forms-blank-googlecolors.png";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { actions } from "../../store/formSlice";
+import { useDispatch, createBlankForm } from '../../store';
 
 function NewForm() {
   const nav = useNavigate();
@@ -11,7 +10,7 @@ function NewForm() {
 
   let handleClick = () => {
     let newId = Date.now().toString();
-    dispatch(actions.createBlankForm(newId));
+    dispatch(createBlankForm(newId));
     nav(`${newId}/edit`);
   };
 
@@ -32,7 +31,6 @@ function NewForm() {
   );
 }
 
-export default NewForm;
 
 let StyledDiv = styled.div`
   height: 250px;
@@ -50,3 +48,5 @@ let StyledDiv = styled.div`
     background-color: white;
   }
 `;
+
+export default NewForm;

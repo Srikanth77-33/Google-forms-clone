@@ -1,19 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import QuestionLayout from "../layouts/QuestionLayout";
-import { BiTimeFive } from "react-icons/bi";
-import { MdOutlineDateRange } from "react-icons/md";
-import { infoActions } from "../../store/infoSlice";
+import QuestionContainer from "./QuestionContainer";
+import { BiTimeFive, MdOutlineDateRange } from "../../icons";
+import { getEditQuestionIndex, setEditQuestionIndex, useDispatch, useSelector } from "../../store";
 
 const DateTimeInput = ({ input, inputIndex, formId }) => {
   const dispatch = useDispatch();
 
-  const editQuestionIndex = useSelector(
-    (state) => state.info.editQuestionIndex
-  );
+  const editQuestionIndex = useSelector(getEditQuestionIndex());
 
   let placeholder = input.type === "date" ? "Day-Month-Year" : "Time";
+  let className =
+    editQuestionIndex === inputIndex ? "placeholderA" : "placeholderB";
   let iconStyle = {
     width: "24px",
     height: "24px",
@@ -32,12 +30,12 @@ const DateTimeInput = ({ input, inputIndex, formId }) => {
     e.stopPropagation();
 
     if (editQuestionIndex !== inputIndex) {
-      dispatch(infoActions.setEditQuestionIndex({ inputIndex }));
+      dispatch(setEditQuestionIndex({ inputIndex }));
     }
   };
 
   return (
-    <QuestionLayout
+    <QuestionContainer
       input={input}
       inputIndex={inputIndex}
       formId={formId}
@@ -45,15 +43,11 @@ const DateTimeInput = ({ input, inputIndex, formId }) => {
       focus="question"
     >
       <Div>
-        <div
-          className={
-            editQuestionIndex === inputIndex ? "placeholderA" : "placeholderB"
-          }
-        >
+        <div className={className}>
           {placeholder} {icon}
         </div>
       </Div>
-    </QuestionLayout>
+    </QuestionContainer>
   );
 };
 
@@ -72,4 +66,5 @@ const Div = styled.div`
     border-bottom: 1px solid #9e9e9e;
   }
 `;
+
 export default DateTimeInput;

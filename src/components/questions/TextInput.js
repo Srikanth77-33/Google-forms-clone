@@ -1,14 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import QuestionLayout from "../layouts/QuestionLayout";
-import { infoActions } from "../../store/infoSlice";
+import QuestionContainer from "./QuestionContainer";
+import { setEditQuestionIndex, useSelector, useDispatch, getEditQuestionIndex } from "../../store";
 
 const TextInput = ({ input, inputIndex, formId }) => {
   const dispatch = useDispatch();
-  const editQuestionIndex = useSelector(
-    (state) => state.info.editQuestionIndex
-  );
+  const editQuestionIndex = useSelector(getEditQuestionIndex());
 
   let placeholder =
     input.type === "paragraph" ? "Long-answer text" : "Short-answer text";
@@ -18,12 +15,12 @@ const TextInput = ({ input, inputIndex, formId }) => {
     e.stopPropagation();
 
     if (editQuestionIndex !== inputIndex) {
-      dispatch(infoActions.setEditQuestionIndex({ inputIndex }));
+      dispatch(setEditQuestionIndex({ inputIndex }));
     }
   };
 
   return (
-    <QuestionLayout
+    <QuestionContainer
       input={input}
       inputIndex={inputIndex}
       formId={formId}
@@ -39,7 +36,7 @@ const TextInput = ({ input, inputIndex, formId }) => {
           {placeholder}
         </div>
       </Div>
-    </QuestionLayout>
+    </QuestionContainer>
   );
 };
 

@@ -1,28 +1,28 @@
 import React from "react";
 import styled from "styled-components";
-import { infoActions } from "../../store/infoSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { getTheme, setIsSubmitted, useDispatch, useSelector } from "../../store";
 
 const FormTitle = ({ title, description, isSubmitted, formId }) => {
   const dispatch = useDispatch();
-  const theme = useSelector((state) => state.forms.find((item) => item.id === formId).theme)
+  const theme = useSelector(getTheme(formId));
 
   const handleClick = () => {
-    dispatch(infoActions.setIsSubmitted({ isSubmitted: false }));
+    dispatch(setIsSubmitted({ isSubmitted: false }));
   };
 
   return (
-    <StyledDiv style={{ borderTop: `10px solid ${theme}`}}>
+    <StyledDiv style={{ borderTop: `10px solid ${theme}` }}>
       <div className="form-title">{title}</div>
-      {!isSubmitted && (
+      {!isSubmitted ? (
         <div className="description">
           {description ? description : "Form description"}
         </div>
-      )}
-      {isSubmitted && <div>Your response has been recorded.</div>}
-      {isSubmitted && (
-        <div className="link" onClick={() => handleClick()}>
-          Submit another response
+      ) : (
+        <div>
+          <div>Your response has been recorded.</div>
+          <div className="link" onClick={() => handleClick()}>
+            Submit another response
+          </div>
         </div>
       )}
     </StyledDiv>

@@ -12,6 +12,7 @@ const Question = ({ index, question = "", required, children }) => {
     </Div>
   );
 };
+
 const Div = styled.div`
   margin-top: 16px;
   min-height: 128px;
@@ -20,8 +21,9 @@ const Div = styled.div`
   background-color: white;
   box-shadow: 0 0 0 2px #d9d9d9;
   .question {
-    margin: 24px 16px 16px 32px;
+    padding: 24px 16px 8px 32px;
     font-size: 18px;
   }
 `;
+
 export default Question;

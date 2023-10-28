@@ -1,43 +1,18 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import logo from "../../images/forms.png";
 import { useNavigate } from "react-router-dom";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { actions } from "../../store/formSlice";
+import { RiDeleteBin6Line } from "../../icons";
+import { deleteForm, useSelector, useDispatch, getForms } from "../../store";
 
-export const RecentForms = () => {
-  const forms = useSelector((state) => state.forms);
-  const nav = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleDelete = (ind) => {
-    dispatch(actions.deleteForm({ formIndex: ind }));
-  };
+const RecentForms = () => {
+  const forms = useSelector(getForms());
 
   return (
     <StyledDiv>
       <div className="title">Recent Forms</div>
       {forms.length ? (
-        <div style={{ display: "flex", gap: "12px" }}>
-          {forms.map(({ title, id }, ind) => (
-            <Item key={id}>
-              <div
-                onClick={() => nav(`/${id}/edit`)}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <img className="logo" src={logo} alt="logo" />
-                <div className="card-title">
-                  {title.length < 15 ? title : title.substring(0, 15) + "..."}
-                </div>
-              </div>
-              <RiDeleteBin6Line
-                onClick={() => handleDelete(ind)}
-                className="icon"
-              />
-            </Item>
-          ))}
-        </div>
+        <Card forms={forms} />
       ) : (
         <div className="card">
           <div
@@ -54,6 +29,37 @@ export const RecentForms = () => {
         </div>
       )}
     </StyledDiv>
+  );
+};
+
+const Card = ({ forms }) => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleDelete = (ind) => {
+    dispatch(deleteForm({ formIndex: ind }));
+  };
+
+  return (
+    <div style={{ display: "flex", gap: "12px" }}>
+      {forms.map(({ title, id }, ind) => (
+        <Item key={id}>
+          <div
+            onClick={() => nav(`/${id}/edit`)}
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img className="logo" src={logo} alt="logo" />
+            <div className="card-title">
+              {title.length < 15 ? title : title.substring(0, 15) + "..."}
+            </div>
+          </div>
+          <RiDeleteBin6Line
+            onClick={() => handleDelete(ind)}
+            className="icon"
+          />
+        </Item>
+      ))}
+    </div>
   );
 };
 
@@ -95,3 +101,5 @@ const Item = styled.div`
     }
   }
 `;
+
+export default RecentForms;

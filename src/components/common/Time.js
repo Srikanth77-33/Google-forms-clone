@@ -1,10 +1,10 @@
 import React,{ useState} from "react";
 import styled from "styled-components";
-import Question from "./Question";
-import { useSelector } from "react-redux";
+import Question from "../view/Question";
+import { getTheme, useSelector } from '../../store';
 
 const Time = ({ input, inputIndex, formId, response }) => {
-  const theme = useSelector((state) => state.forms.find((item) => item.id === formId).theme)
+  const theme = useSelector(getTheme(formId));
   const [isFocused, setIsFocused] = useState('false')
 
   const style = {
@@ -28,7 +28,7 @@ const Time = ({ input, inputIndex, formId, response }) => {
             onBlur={() => setIsFocused(false)}
           />
         ) : (
-          <input type="Time" value={response.ans} readOnly />
+          <input type="Time" value={response.ans} disabled  />
         )}
       </Div>
     </Question>

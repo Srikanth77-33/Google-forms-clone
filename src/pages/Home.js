@@ -1,9 +1,8 @@
 import React from "react";
-import { Header } from "./Header";
-import NewForm from "./NewForm";
-import { RecentForms } from "./RecentForms";
+import { Header, NewForm, RecentForms } from "../components/home";
 
-export const Home = () => {
+
+const Home = () => {
   return (
     <div style={{ height: "100vh" }}>
       <Header />
@@ -12,3 +11,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;
