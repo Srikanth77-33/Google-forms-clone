@@ -45,6 +45,15 @@ const Button = styled.div`
   text-align: center;
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2);
   transition: all 0.4s ease;
+  @media (max-width: 1400px){
+    right: 256px;
+  }
+  @media (max-width: 1240px){
+    right: 153px;
+  }
+  @media (max-width: 1025px){
+    right: 112px;
+  }
 `;
 
 export default SideButton;
